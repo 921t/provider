@@ -1,8 +1,10 @@
 <template>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
+                    <note-create></note-create>
+
                     <div class="card-header">Note Component</div>
 
                     <div class="card-body">
@@ -18,12 +20,17 @@
 </template>
 
 <script>
+    import NoteCreate from './NoteCreate.vue';
+
     export default {
         data() {
             return {
                 notes: []
             }
         },
+        components: [
+            NoteCreate
+        ],
         mounted() {
             axios.get('notes').then((response) => {
                 console.log(response)
