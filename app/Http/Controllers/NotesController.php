@@ -8,10 +8,21 @@ class NotesController extends Controller
 {
     public function index(Request $request)
     {
-        $user = $request->user();
-
-        $notes = $user->notes()->with('user')->get();
+        $notes = $request->user()->notes()->with('user')->latest()->get();
 
         return $notes;
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'content' => 'required',
+        ]);
+
+        $note = $request->user()->notes()->create([
+            'content' => $request->input('content')
+        ])->load('user');
+
+        return $note;
     }
 }

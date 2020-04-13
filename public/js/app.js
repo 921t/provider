@@ -1942,7 +1942,6 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('notes').then(function (response) {
-      console.log(response);
       _this.notes = response.data;
     });
   }
@@ -1973,9 +1972,16 @@ __webpack_require__.r(__webpack_exports__);
       content: null
     };
   },
+  props: ['notes'],
   methods: {
     createNote: function createNote() {
-      console.log('2333');
+      var _this = this;
+
+      axios.post('notes', {
+        content: this.content
+      }).then(function (response) {
+        _this.notes.unshift(response.data);
+      });
     }
   }
 });
@@ -37359,7 +37365,7 @@ var render = function() {
           "div",
           { staticClass: "card" },
           [
-            _c("note-create"),
+            _c("note-create", { attrs: { notes: _vm.notes } }),
             _vm._v(" "),
             _c("div", { staticClass: "card-header" }, [
               _vm._v("Note Component")
@@ -37420,8 +37426,25 @@ var render = function() {
     },
     [
       _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.content,
+            expression: "content"
+          }
+        ],
         staticClass: "form-control",
-        attrs: { name: "", id: "", cols: "30", rows: "10" }
+        attrs: { cols: "30", rows: "10" },
+        domProps: { value: _vm.content },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.content = $event.target.value
+          }
+        }
       }),
       _vm._v(" "),
       _c("br"),

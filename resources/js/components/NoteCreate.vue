@@ -1,6 +1,6 @@
 <template>
     <form action="#" class="form-group" @submit.prevent="createNote">
-        <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+        <textarea class="form-control" cols="30" rows="10" v-model="content"></textarea>
         <br>
         <button class="btn btn-danger float-right" type="submit">创建笔记</button>
     </form>
@@ -13,9 +13,14 @@
                 content: null
             }
         },
+        props: [
+            'notes'
+        ],
         methods: {
             createNote() {
-                console.log('2333')
+                axios.post('notes', { content: this.content }).then((response) => {
+                    this.notes.unshift(response.data)
+                })
             }
         }
     }

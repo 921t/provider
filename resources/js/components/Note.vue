@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <note-create></note-create>
+                    <note-create :notes="notes"></note-create>
 
                     <div class="card-header">Note Component</div>
 
@@ -33,7 +33,6 @@
         ],
         mounted() {
             axios.get('notes').then((response) => {
-                console.log(response)
                 this.notes = response.data
             })
         }

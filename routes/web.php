@@ -21,3 +21,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/notes', 'NotesController@index')->name('notes.index');
+Route::post('/notes', 'NotesController@store')->name('notes.store');
