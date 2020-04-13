@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api', 'scopes')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Route::middleware('auth:api')->group(function () {
+//    Route::get('/notes', 'NotesController@index')->name('api.notes.index')->middleware('scopes:bing');
+//    Route::get('/developers', 'DevelopersController@index')->name('api.developers.index');
+//});
+
+
+Route::middleware(['auth:api', 'scope:bing,all'])->group(function () {
+    Route::get('/notes', 'NotesController@index')->name('api.notes.index');
+    Route::get('/developers', 'DevelopersController@index')->name('api.developers.index');
+});
+

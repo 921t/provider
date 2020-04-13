@@ -27,5 +27,14 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+
+        Passport::tokensExpireIn(now()->addDays(15));
+
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+
+        Passport::tokensCan([
+            'all' => '所有',
+            'bing' => 'bing 搜索',
+        ]);
     }
 }
